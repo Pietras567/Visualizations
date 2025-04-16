@@ -1,0 +1,63 @@
+Day,StartTime,EndTime,Category
+Poniedziałek,00:00,06:30,Sen
+Poniedziałek,06:30,07:30,Odpoczynek i rozrywka
+Poniedziałek,07:30,08:00,Transport
+Poniedziałek,08:00,12:00,Studia
+Poniedziałek,12:00,12:30,Transport
+Poniedziałek,12:30,14:00,Obowiązki
+Poniedziałek,14:00,15:30,Odpoczynek i rozrywka
+Poniedziałek,15:30,19:00,Praca
+Poniedziałek,19:00,19:30,Odpoczynek i rozrywka
+Poniedziałek,19:30,21:30,Obowiązki
+Poniedziałek,21:30,24:00,Odpoczynek i rozrywka
+Wtorek,00:00,07:30,Sen
+Wtorek,07:30,09:30,Odpoczynek i rozrywka
+Wtorek,09:30,10:00,Transport
+Wtorek,10:00,12:30,Studia
+Wtorek,12:30,13:00,Transport
+Wtorek,13:00,15:30,Odpoczynek i rozrywka
+Wtorek,15:30,18:30,Praca
+Wtorek,18:30,20:30,Siłownia
+Wtorek,20:30,24:00,Odpoczynek i rozrywka
+Środa,00:00,07:30,Sen
+Środa,07:30,12:00,Odpoczynek i rozrywka
+Środa,12:00,13:00,Obowiązki
+Środa,13:00,17:00,Praca
+Środa,17:00,18:00,Odpoczynek i rozrywka
+Środa,18:00,20:00,Praca
+Środa,20:00,24:00,Odpoczynek i rozrywka
+Czwartek,00:00,07:30,Sen
+Czwartek,07:30,12:00,Odpoczynek i rozrywka
+Czwartek,12:00,13:30,Praca
+Czwartek,13:30,14:00,Transport
+Czwartek,14:00,16:00,Studia
+Czwartek,16:00,16:30,Transport
+Czwartek,16:30,20:00,Praca
+Czwartek,20:00,22:00,Siłownia
+Czwartek,22:00,24:00,Odpoczynek i rozrywka
+Piątek,00:00,06:30,Sen
+Piątek,06:30,07:30,Odpoczynek i rozrywka
+Piątek,07:30,08:00,Transport
+Piątek,08:00,12:00,Studia
+Piątek,12:00,12:30,Transport
+Piątek,12:30,15:00,Odpoczynek i rozrywka
+Piątek,15:00,18:30,Praca
+Piątek,18:30,19:30,Obowiązki
+Piątek,19:30,24:00,Odpoczynek i rozrywka
+Sobota,00:00,08:00,Sen
+Sobota,08:00,09:00,Odpoczynek i rozrywka
+Sobota,09:00,10:00,Obowiązki
+Sobota,10:00,16:00,Praca
+Sobota,16:00,18:30,Odpoczynek i rozrywka
+Sobota,18:30,19:00,Transport
+Sobota,19:00,21:30,Odpoczynek i rozrywka
+Sobota,21:30,22:00,Transport
+Sobota,22:00,24:00,Odpoczynek i rozrywka
+Niedziela,00:00,08:00,Sen
+Niedziela,08:00,08:30,Odpoczynek i rozrywka
+Niedziela,08:30,10:00,Obowiązki
+Niedziela,10:00,14:00,Praca
+Niedziela,14:00,15:00,Odpoczynek i rozrywka
+Niedziela,15:00,17:00,Siłownia
+Niedziela,17:00,21:00,Praca
+Niedziela,21:00,24:00,Odpoczynek i rozrywka
