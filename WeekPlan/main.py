@@ -138,7 +138,8 @@ trace_summary = go.Bar(
     y=summary["Percent"],
     marker=dict(color=[kolory.get(cat, "lightgray") for cat in summary["Category"]]),
     text=[f"{p:.1f}%" for p in summary["Percent"]],
-    textposition="auto"
+    textposition="auto",
+    hovertemplate="Kategoria: %{x}<br>Udział: %{y:.1f}%<extra></extra>"
 )
 layout_summary = go.Layout(
     title={
@@ -428,11 +429,6 @@ def export_combined():
     fig.update_xaxes(domain=[0.05, 0.90], row=2, col=1)
     fig.update_yaxes(domain=[0.30, 0.60], row=2, col=1)
 
-    fig.update_traces(
-        hovertemplate='%{x}: %{y}<extra></extra>',
-        selector=dict(type='bar')
-    )
-
     # Dostosowanie wysokości i pozycji wykresów donut
     for i in range(1, 8):
         fig.update_layout({
@@ -466,8 +462,29 @@ def export_combined():
             annotation.y = 0.255
             annotation.x = 0.00 + (i - 2) * 0.1439 + 0.0675
 
+    # Ustawienia dodatkowych parametrów hovertool
+    fig.update_layout(
+        hoverlabel=dict(
+            font_size=14,
+            font_family="Roboto"
+        )
+    )
+
     # Zapis
-    fig.write_html("combined_plots.html")
+    fig.write_html("combined_plots.html",
+                   include_plotlyjs='cdn',
+                   full_html=True,
+                   config={
+                       'displayModeBar': True,
+                       'toImageButtonOptions': {
+                           'format': 'svg',
+                           'filename': 'custom_image',
+                           'height': 1080,
+                           'width': 1920,
+                           'scale': 3
+                       },
+                       'modeBarButtonsToAdd': ['toggleHover']
+                   })
     pio.write_image(fig, "combined_plots.png", scale=3, width=1920, height=1080)
     pio.write_image(fig, "combined_plots.svg", width=1920, height=1080)
 
