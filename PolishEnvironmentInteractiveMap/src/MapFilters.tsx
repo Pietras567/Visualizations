@@ -329,6 +329,17 @@ const MapFilters: React.FC<MapFiltersProps> = ({
         const {min: allowedMin, max: allowedMax} = defaultRanges[rangeKey];
         const startPct = ((min - allowedMin) / (allowedMax - allowedMin)) * 100;
         const endPct = ((max - allowedMin) / (allowedMax - allowedMin)) * 100;
+
+        const handleMinChange = (value: number) => {
+            const newMin = Math.min(value, max - 1);
+            updateRangeFilter(rangeKey, 'min', newMin);
+        };
+
+        const handleMaxChange = (value: number) => {
+            const newMax = Math.max(value, min + 1);
+            updateRangeFilter(rangeKey, 'max', newMax);
+        };
+
         return (
             <div style={{marginBottom: '12px'}}>
                 <div style={{fontWeight: 'bold', marginBottom: '5px', fontSize: '13px'}}>
@@ -373,7 +384,143 @@ const MapFilters: React.FC<MapFiltersProps> = ({
                     />
                     <span style={{fontSize: '11px', color: '#888'}}>{unit}</span>
                 </div>
+                <div style={{position: 'relative', height: '28px', marginTop: '8px'}}>
+                    <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '0',
+                        right: '0',
+                        height: '4px',
+                        background: '#e0e0e0',
+                        borderRadius: '2px',
+                        transform: 'translateY(-50%)'
+                    }}/>
 
+                    <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: `${startPct}%`,
+                        width: `${endPct - startPct}%`,
+                        height: '4px',
+                        background: '#007bff',
+                        borderRadius: '2px',
+                        transform: 'translateY(-50%)'
+                    }}/>
+
+                    <input
+                        type='range'
+                        min={allowedMin}
+                        max={allowedMax}
+                        value={min}
+                        onChange={e => handleMinChange(Number(e.target.value))}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '28px',
+                            opacity: 0,
+                            cursor: 'pointer',
+                            pointerEvents: 'none'
+                        }}
+                    />
+
+                    <input
+                        type='range'
+                        min={allowedMin}
+                        max={allowedMax}
+                        value={max}
+                        onChange={e => handleMaxChange(Number(e.target.value))}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '28px',
+                            opacity: 0,
+                            cursor: 'pointer',
+                            pointerEvents: 'none'
+                        }}
+                    />
+
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: `${startPct}%`,
+                            width: '16px',
+                            height: '16px',
+                            background: '#007bff',
+                            border: '2px solid white',
+                            borderRadius: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            cursor: 'pointer',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                            zIndex: 2
+                        }}
+                        onMouseDown={(e) => {
+                            e.preventDefault();
+                            const startX = e.clientX;
+                            const startValue = min;
+                            const rect = e.currentTarget.parentElement!.getBoundingClientRect();
+                            const width = rect.width;
+
+                            const handleMouseMove = (e: MouseEvent) => {
+                                const deltaX = e.clientX - startX;
+                                const deltaValue = (deltaX / width) * (allowedMax - allowedMin);
+                                const newValue = Math.round(Math.max(allowedMin, Math.min(allowedMax, startValue + deltaValue)));
+                                handleMinChange(newValue);
+                            };
+
+                            const handleMouseUp = () => {
+                                document.removeEventListener('mousemove', handleMouseMove);
+                                document.removeEventListener('mouseup', handleMouseUp);
+                            };
+
+                            document.addEventListener('mousemove', handleMouseMove);
+                            document.addEventListener('mouseup', handleMouseUp);
+                        }}
+                    />
+
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: `${endPct}%`,
+                            width: '16px',
+                            height: '16px',
+                            background: '#007bff',
+                            border: '2px solid white',
+                            borderRadius: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            cursor: 'pointer',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                            zIndex: 2
+                        }}
+                        onMouseDown={(e) => {
+                            e.preventDefault();
+                            const startX = e.clientX;
+                            const startValue = max;
+                            const rect = e.currentTarget.parentElement!.getBoundingClientRect();
+                            const width = rect.width;
+
+                            const handleMouseMove = (e: MouseEvent) => {
+                                const deltaX = e.clientX - startX;
+                                const deltaValue = (deltaX / width) * (allowedMax - allowedMin);
+                                const newValue = Math.round(Math.max(allowedMin, Math.min(allowedMax, startValue + deltaValue)));
+                                handleMaxChange(newValue);
+                            };
+
+                            const handleMouseUp = () => {
+                                document.removeEventListener('mousemove', handleMouseMove);
+                                document.removeEventListener('mouseup', handleMouseUp);
+                            };
+
+                            document.addEventListener('mousemove', handleMouseMove);
+                            document.addEventListener('mouseup', handleMouseUp);
+                        }}
+                    />
+                </div>
             </div>
         )
     };
