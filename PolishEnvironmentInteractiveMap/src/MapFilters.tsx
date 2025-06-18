@@ -761,13 +761,13 @@ const MapFilters: React.FC<MapFiltersProps> = ({
                     marginBottom: '15px'
                 }}>
                     {createRangeInput('Ogólny indeks', 'aqIndexRange', '', '🌫️')}
-                    {createCheckbox('Wymagaj SO₂', filters.requireSo2, () => updateFilter('requireSo2', !filters.requireSo2), 'SO₂')}
-                    {createCheckbox('Wymagaj NO₂', filters.requireNo2, () => updateFilter('requireNo2', !filters.requireNo2), 'NO₂')}
-                    {createCheckbox('Wymagaj PM10', filters.requirePm10, () => updateFilter('requirePm10', !filters.requirePm10), 'PM10')}
-                    {createCheckbox('Wymagaj PM2.5', filters.requirePm25, () => updateFilter('requirePm25', !filters.requirePm25), 'PM2.5')}
-                    {createCheckbox('Wymagaj O₃', filters.requireO3, () => updateFilter('requireO3', !filters.requireO3), 'O₃')}
-                    {createCheckbox('Wymagaj CO', filters.requireCo, () => updateFilter('requireCo', !filters.requireCo), 'CO')}
-                    {createCheckbox('Wymagaj C₆H₆', filters.requireC6h6, () => updateFilter('requireC6h6', !filters.requireC6h6), 'C₆H₆')}
+                    {createCheckbox('Wymagaj SO₂', filters.requireSo2, () => updateFilter('requireSo2', !filters.requireSo2), '')}
+                    {createCheckbox('Wymagaj NO₂', filters.requireNo2, () => updateFilter('requireNo2', !filters.requireNo2), '')}
+                    {createCheckbox('Wymagaj PM10', filters.requirePm10, () => updateFilter('requirePm10', !filters.requirePm10), '')}
+                    {createCheckbox('Wymagaj PM2.5', filters.requirePm25, () => updateFilter('requirePm25', !filters.requirePm25), '')}
+                    {createCheckbox('Wymagaj O₃', filters.requireO3, () => updateFilter('requireO3', !filters.requireO3), '')}
+                    {createCheckbox('Wymagaj CO', filters.requireCo, () => updateFilter('requireCo', !filters.requireCo), '')}
+                    {createCheckbox('Wymagaj C₆H₆', filters.requireC6h6, () => updateFilter('requireC6h6', !filters.requireC6h6), '')}
                 </div>
             )}
         </div>

@@ -72,7 +72,7 @@ export async function getCurrentMeasurementsPL(): Promise<IAqMeasurement[]> {
 
     await db.aqMeasurements.clear();
     await db.aqMeasurements.bulkAdd(results);
-    console.log(`Zapisano ${results.length} pomiarów meteo do bazy danych`);
+    console.log(`Zapisano ${results.length} pomiarów aq do bazy danych`);
 
     return results;
 }

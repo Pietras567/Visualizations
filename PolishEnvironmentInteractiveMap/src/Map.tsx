@@ -12,6 +12,7 @@ import MapFilters, {type FilterState} from "./MapFilters.tsx";
 import SearchBox, {type SearchResult} from "./SearchBox.tsx";
 import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import StatisticsPanel from "./StatisticsPanel.tsx";
 
 interface MapProps {
     center?: [number, number];
@@ -116,11 +117,11 @@ const Map: React.FC<MapProps> = ({
                 return false;
             }
 
-            if (filters.showOnlyWithIce && !measurement.zjawisko_lodowe) {
+            if (filters.showOnlyWithIce && (!measurement.zjawisko_lodowe || measurement.zjawisko_lodowe == 0)) {
                 return false;
             }
 
-            if (filters.showOnlyWithGrowth && !measurement.zjawisko_zarastania) {
+            if (filters.showOnlyWithGrowth && (!measurement.zjawisko_zarastania || measurement.zjawisko_zarastania == 0)) {
                 return false;
             }
 
@@ -357,6 +358,13 @@ const Map: React.FC<MapProps> = ({
                 zIndexOffset: 1000
             }).addTo(leafletInstance.current);
 
+            leafletInstance.current.once('moveend', () => {
+                const el = highlightMarkerRef.current?.getElement();
+                if (el) {
+                    el.querySelector('div')?.classList.add('pulse');
+                }
+            });
+
             setTimeout(() => {
                 if (highlightMarkerRef.current && leafletInstance.current) {
                     leafletInstance.current.removeLayer(highlightMarkerRef.current);
@@ -364,6 +372,60 @@ const Map: React.FC<MapProps> = ({
                 }
             }, 5000);
         }
+    };
+
+    const goToLocation = (lat: number, lon: number) => {
+        if (!leafletInstance.current) return;
+
+        leafletInstance.current.setView([lat, lon], 12, {
+            animate: true,
+            duration: 1
+        });
+
+        if (highlightMarkerRef.current) {
+            leafletInstance.current.removeLayer(highlightMarkerRef.current);
+        }
+
+        const highlightIcon = L.divIcon({
+            className: 'highlight-marker',
+            html: `<div style="
+          background-color: #ff0000;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          border: 3px solid white;
+          box-shadow: 0 0 10px rgba(255,0,0,0.5);
+          animation: pulse 2s infinite;
+        "></div>
+        <style>
+          @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+        </style>`,
+            iconSize: [26, 26],
+            iconAnchor: [13, 13]
+        });
+
+        highlightMarkerRef.current = L.marker([lat, lon], {
+            icon: highlightIcon,
+            zIndexOffset: 1000
+        }).addTo(leafletInstance.current);
+
+        leafletInstance.current.once('moveend', () => {
+            const el = highlightMarkerRef.current?.getElement();
+            if (el) {
+                el.querySelector('div')?.classList.add('pulse');
+            }
+        });
+
+        setTimeout(() => {
+            if (highlightMarkerRef.current && leafletInstance.current) {
+                leafletInstance.current.removeLayer(highlightMarkerRef.current);
+                highlightMarkerRef.current = null;
+            }
+        }, 5000);
     };
 
     const createColoredIcon = (color: string) => {
@@ -417,7 +479,6 @@ const Map: React.FC<MapProps> = ({
                 maxZoom: 19,
             }).addTo(leafletInstance.current);
 
-            // markersRef.current = L.layerGroup().addTo(leafletInstance.current);
             markersRef.current = (L as any).markerClusterGroup({
                 spiderfyOnMaxZoom: true,
                 showCoverageOnHover: false,
@@ -705,6 +766,8 @@ const Map: React.FC<MapProps> = ({
                     <span>🌫️ Jakość powietrza ({filteredData.aq.length})</span>
                 </div>
             </div>
+
+            <StatisticsPanel onGoToStation={goToLocation}/>
         </div>
     );
 };
