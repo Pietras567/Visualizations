@@ -18,9 +18,9 @@ const dmsToDecimal = (dmsString: string): number => {
     return degrees + minutes / 60 + seconds / 3600;
 };
 
-export const parseStationCoordinates = async (): Promise<Map<string, StationCoordinate>> => {
+export const parseHydroStationCoordinates = async (): Promise<Map<string, StationCoordinate>> => {
     try {
-        const response = await fetch('/kody_stacji.csv');
+        const response = await fetch('/kody_stacji_hydro.csv');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

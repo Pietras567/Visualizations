@@ -204,8 +204,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputBlur}
                     placeholder="Szukaj stacji pomiarowej..."
                     style={{
                         width: '100%',

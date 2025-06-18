@@ -6,15 +6,15 @@ import {
     type IMeteoMeasurement,
     type ISynopMeasurement
 } from './dexie.tsx';
-import {parseStationCoordinates, type StationCoordinate} from "./stationCoordinates.tsx";
+import {parseHydroStationCoordinates, type StationCoordinate} from "./stationCoordinatesHydro.tsx";
 import {getSynopStationCoordinates} from './stationCoordinatesSynop';
 
 let stationCoordinatesCache: Map<string, StationCoordinate> | null = null;
 
-const getStationCoordinates = async (): Promise<Map<string, StationCoordinate>> => {
+const getHydroStationCoordinates = async (): Promise<Map<string, StationCoordinate>> => {
     if (!stationCoordinatesCache) {
         console.log('Ładowanie współrzędnych stacji z pliku CSV...');
-        stationCoordinatesCache = await parseStationCoordinates();
+        stationCoordinatesCache = await parseHydroStationCoordinates();
     }
     return stationCoordinatesCache;
 };
@@ -76,7 +76,7 @@ export const getMeasurementsHydro = async (): Promise<IHydroMeasurement[]> => {
         const response = await axios.request(config);
         const hydroData: IHydroMeasurement[] = response.data;
 
-        const stationCoordinates = await getStationCoordinates();
+        const stationCoordinates = await getHydroStationCoordinates();
 
         const hydroDataWithCoordinates = hydroData.map(measurement => {
             const stationId = String(measurement.id_stacji);
